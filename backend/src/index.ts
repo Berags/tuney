@@ -1,4 +1,5 @@
-import { AppDataSource } from "./data-source"
+import { AppDataSource } from "./data-source";
+import "dotenv/config";
 import express = require("express");
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
@@ -10,7 +11,8 @@ import { UserResolver } from "./resolvers/user";
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
             resolvers: [UserResolver]
-        })
+        }),
+        context: ({ req, res }) => ({ req, res })
     });
 
     await AppDataSource.initialize();
