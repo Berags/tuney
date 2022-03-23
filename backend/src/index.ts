@@ -1,15 +1,15 @@
-import { AppDataSource } from "./data-source";
 import "dotenv/config";
+import 'reflect-metadata';
 import express = require("express");
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import 'reflect-metadata';
 import { UserResolver } from "./resolvers/user";
+import { AppDataSource } from "./data-source";
 
 const PORT = 4000 || process.env.PORT;
+export const app = express();
 
 (async () => {
-    const app = express();
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
             resolvers: [UserResolver]
@@ -27,6 +27,6 @@ const PORT = 4000 || process.env.PORT;
     })
 
     app.listen(PORT, () => {
-        console.log("Tuney server started on http://localhost:4000/");
+        console.log("🚀 Tuney server started on http://localhost:4000/");
     })
-})()
+})();
