@@ -6,6 +6,8 @@ import { buildSchema } from "type-graphql";
 import 'reflect-metadata';
 import { UserResolver } from "./resolvers/user";
 
+const PORT = 4000 || process.env.PORT;
+
 (async () => {
     const app = express();
     const apolloServer = new ApolloServer({
@@ -16,33 +18,15 @@ import { UserResolver } from "./resolvers/user";
     });
 
     await AppDataSource.initialize();
-
     await apolloServer.start();
 
     apolloServer.applyMiddleware({ app });
 
     app.get('/', (req, res) => {
-        res.send("hello");
+        res.send("hello this is tuney beta server");
     })
-    app.listen(4000, () => {
-        console.log("express server started...");
+
+    app.listen(PORT, () => {
+        console.log("Tuney server started on http://localhost:4000/");
     })
 })()
-
-// AppDataSource.initialize().then(async () => {
-
-//     console.log("Inserting a new user into the database...")
-//     const user = new User()
-//     user.firstName = "Timber"
-//     user.lastName = "Saw"
-//     user.age = 25
-//     await AppDataSource.manager.save(user)  
-//     console.log("Saved a new user with id: " + user.id)
-
-//     console.log("Loading users from the database...")
-//     const users = await AppDataSource.manager.find(User)
-//     console.log("Loaded users: ", users)
-
-//     console.log("Here you can setup and run express / fastify / any other framework.")
-
-// }).catch(error => console.log(error))
